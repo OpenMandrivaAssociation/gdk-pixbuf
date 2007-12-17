@@ -37,7 +37,6 @@ Patch5:		gdk-pixbuf-0.22.0-bmpcrash.patch
 # (fc) 0.22.0-8mdk fix ICO width (Fedora)
 Patch6:		gdk-pixbuf-0.22.0-ico-width.patch
 Patch7:		gdk-pixbuf-0.22.0-fix-underquoted-calls.patch
-BuildRoot:	%{_tmppath}//%{name}-%{version}-%{release}-buildroot
 URL:		http://www.gnome.org/
 Requires:	%{name}-loaders = %{version}
 
