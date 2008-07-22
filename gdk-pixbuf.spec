@@ -14,7 +14,7 @@
 Summary:	An image loading and rendering library for Gdk
 Name:		gdk-pixbuf
 Version:	0.22.0
-Release:	%mkrel 13
+Release:	%mkrel 14
 License:	LGPL
 Group:		System/Libraries
 BuildRequires:	gnome-libs-devel libjpeg-devel libpng-devel libtiff-devel db1-devel
