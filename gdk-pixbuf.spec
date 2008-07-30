@@ -17,12 +17,7 @@ Version:	0.22.0
 Release:	%mkrel 14
 License:	LGPL
 Group:		System/Libraries
-BuildRequires:	gnome-libs-devel libjpeg-devel libpng-devel libtiff-devel db1-devel
-BuildRequires:	libxt-devel
-BuildRequires:	autoconf2.1
-%if %{build_xvfb}
-BuildRequires:	XFree86-Xvfb
-%endif
+URL:		http://www.gnome.org/
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/unstable/%{name}/%{name}-%{version}.tar.bz2
 Patch0:		gdk-pixbuf-demolink.patch
 # (fc) 0.18.0-1mdk don't add -Llibdir to gdk-pixbuf-config --libs
@@ -37,9 +32,20 @@ Patch5:		gdk-pixbuf-0.22.0-bmpcrash.patch
 # (fc) 0.22.0-8mdk fix ICO width (Fedora)
 Patch6:		gdk-pixbuf-0.22.0-ico-width.patch
 Patch7:		gdk-pixbuf-0.22.0-fix-underquoted-calls.patch
-BuildRoot:	%{_tmppath}//%{name}-%{version}-%{release}-buildroot
-URL:		http://www.gnome.org/
+Patch8:		gdk-pixbuf-0.22.0-rgb.txt_fix.diff
 Requires:	%{name}-loaders = %{version}
+BuildRequires:	autoconf2.1
+BuildRequires:	db1-devel
+BuildRequires:	gnome-libs-devel
+BuildRequires:	libjpeg-devel
+BuildRequires:	libpng-devel
+BuildRequires:	libtiff-devel
+BuildRequires:	libxt-devel
+BuildRequires:	rgb
+%if %{build_xvfb}
+BuildRequires:	XFree86-Xvfb
+%endif
+BuildRoot:	%{_tmppath}//%{name}-%{version}-%{release}-buildroot
 
 %description
 The GdkPixBuf library provides a number of features:
@@ -126,6 +132,7 @@ Install the imlib-devel package if you want to develop Imlib applications.
 You'll also need to install the gdk-pixbuf package.
 
 %prep
+
 %setup -q 
 %patch0 -p1 -b .demolink
 %patch1 -p1 -b .libdir
@@ -135,11 +142,14 @@ You'll also need to install the gdk-pixbuf package.
 %patch5 -p1 -b .bmpcrash
 %patch6 -p1 -b .ico-width
 %patch7 -p1 -b .underquoted
-
-# needed by patches 1 & 4
-WANT_AUTOCONF_2_1=1 autoconf
+%patch8 -p0
 
 %build
+# needed by patches 1 & 4
+%define __libtoolize /bin/true
+rm -f configure
+WANT_AUTOCONF_2_1=1 autoconf-2.13
+
 %configure2_5x --disable-gtk-doc
 
 %if %{build_xvfb}
