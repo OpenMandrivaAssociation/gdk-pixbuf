@@ -41,6 +41,7 @@ BuildRequires:	gnome-libs-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
+BuildRequires:	libtool
 BuildRequires:	libxt-devel
 BuildRequires:	rgb
 %if %{build_xvfb}
@@ -148,9 +149,10 @@ You'll also need to install the gdk-pixbuf package.
 
 %build
 # needed by patches 1 & 4
-%define __libtoolize /bin/true
 rm -f configure
-WANT_AUTOCONF_2_1=1 autoconf-2.13
+WANT_AUTOCONF_2_1=1
+libtoolize --copy --force
+autoconf-2.13
 
 %configure2_5x --disable-gtk-doc
 
@@ -238,5 +240,3 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/aclocal/*
 %{_libdir}/*.sh
 %{_datadir}/gnome/html/*
-
-
