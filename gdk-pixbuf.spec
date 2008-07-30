@@ -5,7 +5,7 @@
 %define lib_xlib %mklibname %{name}-xlib %{major}
 
 # define to use Xvfb
-%define build_xvfb 1
+%define build_xvfb 0
 
 # Allow --with[out] <feature> at rpm command line build
 %{?_without_XVFB: %{expand: %%define build_xvfb 0}}
@@ -33,6 +33,7 @@ Patch5:		gdk-pixbuf-0.22.0-bmpcrash.patch
 Patch6:		gdk-pixbuf-0.22.0-ico-width.patch
 Patch7:		gdk-pixbuf-0.22.0-fix-underquoted-calls.patch
 Patch8:		gdk-pixbuf-0.22.0-rgb.txt_fix.diff
+Patch9:		gdk-pixbuf-0.22.0-linkage_fix.diff
 Requires:	%{name}-loaders = %{version}
 BuildRequires:	autoconf2.1
 BuildRequires:	db1-devel
@@ -143,6 +144,7 @@ You'll also need to install the gdk-pixbuf package.
 %patch6 -p1 -b .ico-width
 %patch7 -p1 -b .underquoted
 %patch8 -p0
+%patch9 -p1
 
 %build
 # needed by patches 1 & 4
@@ -155,10 +157,10 @@ WANT_AUTOCONF_2_1=1 autoconf-2.13
 %if %{build_xvfb}
 XDISPLAY=$(i=0; while [ -f /tmp/.X$i-lock ]; do i=$(($i+1)); done; echo $i)
 Xvfb :$XDISPLAY >& /dev/null &
-DISPLAY=:$XDISPLAY %make
+DISPLAY=:$XDISPLAY make
 kill $(cat /tmp/.X$XDISPLAY-lock)
 %else
-%make
+make
 %endif
 
 
