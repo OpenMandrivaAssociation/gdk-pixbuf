@@ -14,8 +14,8 @@
 Summary:	An image loading and rendering library for Gdk
 Name:		gdk-pixbuf
 Version:	0.22.0
-Release:	%mkrel 14
-License:	LGPL
+Release:	%mkrel 15
+License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.gnome.org/
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/unstable/%{name}/%{name}-%{version}.tar.bz2
@@ -162,14 +162,14 @@ Xvfb :$XDISPLAY >& /dev/null &
 DISPLAY=:$XDISPLAY make
 kill $(cat /tmp/.X$XDISPLAY-lock)
 %else
-make
+make LIBTOOL=libtool
 %endif
 
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%makeinstall_std
+%makeinstall_std  LIBTOOL=libtool
 
 %multiarch_binaries $RPM_BUILD_ROOT%{_bindir}/gdk-pixbuf-config
 
