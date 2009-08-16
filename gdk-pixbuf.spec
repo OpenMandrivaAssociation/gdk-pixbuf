@@ -153,7 +153,7 @@ rm -f configure
 WANT_AUTOCONF_2_1=1
 libtoolize --copy --force
 autoconf-2.13
-
+%define _disable_ld_no_undefined 1
 %configure2_5x --disable-gtk-doc
 
 %if %{build_xvfb}
