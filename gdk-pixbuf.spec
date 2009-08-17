@@ -34,14 +34,14 @@ Patch6:		gdk-pixbuf-0.22.0-ico-width.patch
 Patch7:		gdk-pixbuf-0.22.0-fix-underquoted-calls.patch
 Patch8:		gdk-pixbuf-0.22.0-rgb.txt_fix.diff
 Patch9:		gdk-pixbuf-0.22.0-linkage_fix.diff
+Patch10:	gdk-pixbuf-0.22.0-remove-gmodule-configure-check.patch
 Requires:	%{name}-loaders = %{version}
-BuildRequires:	autoconf2.1
 BuildRequires:	db1-devel
 BuildRequires:	gnome-libs-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
-BuildRequires:	libtool
+BuildRequires:	automake1.4
 BuildRequires:	libxt-devel
 BuildRequires:	rgb
 %if %{build_xvfb}
@@ -146,13 +146,15 @@ You'll also need to install the gdk-pixbuf package.
 %patch7 -p1 -b .underquoted
 %patch8 -p0
 %patch9 -p1
+%patch10 -p0
+# needed by patches 1 & 4
+libtoolize --install --force
+aclocal-1.4
+autoconf
+automake-1.4 -a -c
 
 %build
-# needed by patches 1 & 4
-rm -f configure
-WANT_AUTOCONF_2_1=1
-libtoolize --copy --force
-autoconf-2.13
+
 %define _disable_ld_no_undefined 1
 %configure2_5x --disable-gtk-doc
 
@@ -162,14 +164,14 @@ Xvfb :$XDISPLAY >& /dev/null &
 DISPLAY=:$XDISPLAY make
 kill $(cat /tmp/.X$XDISPLAY-lock)
 %else
-make LIBTOOL=libtool
+make
 %endif
 
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%makeinstall_std  LIBTOOL=libtool
+%makeinstall_std
 
 %multiarch_binaries $RPM_BUILD_ROOT%{_bindir}/gdk-pixbuf-config
 
