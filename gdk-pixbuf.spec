@@ -14,7 +14,7 @@
 Summary:	An image loading and rendering library for Gdk
 Name:		gdk-pixbuf
 Version:	0.22.0
-Release:	%mkrel 18
+Release:	18
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.gnome.org/
@@ -37,7 +37,7 @@ Patch9:		gdk-pixbuf-0.22.0-linkage_fix.diff
 Patch10:	gdk-pixbuf-0.22.0-remove-gmodule-configure-check.patch
 Patch11:	gdk-pixbuf-0.22.0-automake.patch
 Requires:	%{name}-loaders = %{version}
-BuildRequires:	db1-devel
+BuildRequires:	db-devel
 BuildRequires:	gnome-libs-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
@@ -47,7 +47,6 @@ BuildRequires:	rgb
 %if %{build_xvfb}
 BuildRequires:	XFree86-Xvfb
 %endif
-BuildRoot:	%{_tmppath}//%{name}-%{version}-%{release}-buildroot
 
 %description
 The GdkPixBuf library provides a number of features:
@@ -59,8 +58,6 @@ The GdkPixBuf library provides a number of features:
 Summary:	An image loading and rendering library for Gdk
 Group:		System/Libraries
 Requires:	%{name}-loaders = %{version}
-Obsoletes:	gdk-pixbuf
-Provides:	gdk-pixbuf = %{version}
 
 %description -n	%{lib_name}
 The GdkPixBuf library provides a number of features:
@@ -74,8 +71,6 @@ This package provides GTK+ version of gdk-pixbuf
 Summary:	An image loading and rendering library for Gdk
 Group:		System/Libraries
 Requires:	gnome-libs %{name}-loaders = %{version}
-Obsoletes:	%{name}-gnomecanvas
-Provides:	%{name}-gnomecanvas = %{version}
 Obsoletes:	lib%{name}-gnomecanvas2 <= 0.13.0-1mdk
 Provides:	lib%{name}-gnomecanvas2 = %{version}
 
@@ -91,8 +86,6 @@ This package provides GNOME version of gdk-pixbuf
 Summary:	An image loading and rendering library for Gdk
 Group:		System/Libraries
 Requires:	%{name}-loaders = %{version}
-Obsoletes:	%{name}-xlib
-Provides:	%{name}-xlib = %{version}
 
 %description -n	%{lib_xlib}
 The GdkPixBuf library provides a number of features:
@@ -121,8 +114,6 @@ Group:		Development/GNOME and GTK+
 Requires:	%{lib_canvas} = %{version}
 Requires:	%{lib_xlib} = %{version}
 Requires:	%{lib_name} = %{version}
-Obsoletes:	%{name}-devel
-Provides:	%{name}-devel = %{version}
 Provides:	lib%{name}-devel = %{version}
 
 %description -n	%{lib_name}-devel
@@ -134,7 +125,6 @@ Install the imlib-devel package if you want to develop Imlib applications.
 You'll also need to install the gdk-pixbuf package.
 
 %prep
-
 %setup -q 
 %patch0 -p1 -b .demolink
 %patch1 -p1 -b .libdir
@@ -156,9 +146,9 @@ autoconf
 automake -a -c --foreign
 
 %build
-
-%define _disable_ld_no_undefined 1
-%configure2_5x --disable-gtk-doc
+%configure2_5x \
+    --disable-gtk-doc \
+    --disable-static
 
 %if %{build_xvfb}
 XDISPLAY=$(i=0; while [ -f /tmp/.X$i-lock ]; do i=$(($i+1)); done; echo $i)
@@ -169,74 +159,31 @@ kill $(cat /tmp/.X$XDISPLAY-lock)
 make
 %endif
 
-
 %install
-rm -rf $RPM_BUILD_ROOT
-
+rm -rf %{buildroot}
 %makeinstall_std
+%multiarch_binaries %{buildroot}%{_bindir}/gdk-pixbuf-config
+rm -f %{buildroot}%{_libdir}/*.la
 
-%multiarch_binaries $RPM_BUILD_ROOT%{_bindir}/gdk-pixbuf-config
-
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-%if %mdkversion < 200900
-%post -n %{lib_name} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{lib_name} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%post -n %{lib_xlib} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{lib_xlib} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%post -n %{lib_canvas} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{lib_canvas} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%post loaders -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun loaders -p /sbin/ldconfig
-%endif
 
 %files -n %{lib_name}
-%defattr(-,root,root)
 %doc AUTHORS COPYING COPYING.LIB NEWS README TODO 
 %{_libdir}/libgdk_pixbuf.so.*
 
 %files loaders
-%defattr(-,root,root)
 %dir %{_libdir}/gdk-pixbuf
 %dir %{_libdir}/gdk-pixbuf/loaders
 %{_libdir}/gdk-pixbuf/loaders/*.so*
 
 %files -n %{lib_xlib} 
-%defattr(-,root,root)
 %{_libdir}/*xlib.so.*
 
 %files -n %{lib_canvas}
-%defattr(-,root,root)
 %{_libdir}/*gnomecanvas*.so.*
 
 %files -n %{lib_name}-devel
-%defattr(-,root,root)
 %{_bindir}/*-config
 %multiarch %{multiarch_bindir}/*-config
-%{_libdir}/*.a
-%{_libdir}/*.la
 %{_libdir}/libgdk*.so
 %{_libdir}/libgnome*.so
 %{_libdir}/gdk-pixbuf/loaders/*a
