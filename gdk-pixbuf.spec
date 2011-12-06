@@ -35,13 +35,13 @@ Patch7:		gdk-pixbuf-0.22.0-fix-underquoted-calls.patch
 Patch8:		gdk-pixbuf-0.22.0-rgb.txt_fix.diff
 Patch9:		gdk-pixbuf-0.22.0-linkage_fix.diff
 Patch10:	gdk-pixbuf-0.22.0-remove-gmodule-configure-check.patch
+Patch11:	gdk-pixbuf-0.22.0-automake.patch
 Requires:	%{name}-loaders = %{version}
 BuildRequires:	db1-devel
 BuildRequires:	gnome-libs-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
-BuildRequires:	automake1.4
 BuildRequires:	libxt-devel
 BuildRequires:	rgb
 %if %{build_xvfb}
@@ -147,11 +147,13 @@ You'll also need to install the gdk-pixbuf package.
 %patch8 -p0
 %patch9 -p1
 %patch10 -p0
+%patch11 -p1
+
 # needed by patches 1 & 4
 libtoolize --install --force
-aclocal-1.4
+aclocal
 autoconf
-automake-1.4 -a -c
+automake -a -c --foreign
 
 %build
 
