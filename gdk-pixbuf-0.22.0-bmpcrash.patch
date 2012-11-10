@@ -1,0 +1,18 @@
+--- gdk-pixbuf-0.22.0/gdk-pixbuf/io-bmp.c.bmpcrash	2005-03-28 09:44:20.295820000 -0500
++++ gdk-pixbuf-0.22.0/gdk-pixbuf/io-bmp.c	2005-03-28 09:55:05.145324000 -0500
+@@ -246,7 +246,14 @@
+ static gboolean
+ grow_buffer (struct bmp_progressive_state *State)
+ {
+-  guchar *tmp = realloc (State->buff, State->BufferSize);
++  guchar *tmp; 
++
++  if (State->BufferSize == 0) {
++    State->read_state = READ_STATE_ERROR;
++    return FALSE;
++  }
++
++  tmp = realloc (State->buff, State->BufferSize);
+   if (!tmp) {
+     State->read_state = READ_STATE_ERROR;
+     return FALSE;

@@ -1,0 +1,58 @@
+--- configure.in~	2009-08-17 10:05:36.000000000 +0200
++++ configure.in	2009-08-17 10:15:48.000000000 +0200
+@@ -80,49 +80,12 @@
+     AC_MSG_RESULT(no)
+ else
+     AC_MSG_RESULT(yes)
+-    AC_MSG_CHECKING(whether dynamic modules work)
+-    oLIBS="$LIBS"
+-    oCFLAGS="$CFLAGS"
+-    CFLAGS="$GLIB_CFLAGS"
+-    LIBS="$GLIB_LIBS"
+-    AC_TRY_RUN([
+-    #include <glib.h>
+-    #include <gmodule.h>
+-    main ()
+-    {
+-    	if (g_module_supported ())
+-    	    exit (0);
+-    	else
+-    	    exit (1);
+-    }
+-    ], dynworks=true)
+-    LIBS="$oLIBS"
+-    CFLAGS="$oCFLAGS"
+-fi
+-    
+-dnl Now we check to see if our libtool supports shared lib deps
+-dnl (in a rather ugly way even)
+-if $dynworks; then
+-   pixbuf_libtool_config="${CONFIG_SHELL-/bin/sh} libtool --config"
+-   pixbuf_deplibs_check=`$pixbuf_libtool_config | \
+-      grep '^[[a-z_]]*check[[a-z_]]*_method=[['\''"]]' | \
+-      sed 's/.*[['\''"]]\(.*\)[['\''"]]$/\1/'`
+-   if test "x$pixbuf_deplibs_check" = "xnone" || \
+-      test "x$pixbuf_deplibs_check" = "xunknown" || \
+-      test "x$pixbuf_deplibs_check" = "x"; then
+-      dynworks=false
+-   fi
+-fi
+-
+-if $dynworks; then
+-   AC_DEFINE(USE_GMODULE)
+-   GMODULE_LIBS="`glib-config --libs gmodule`"
+-   GMODULE_FLAGS="`glib-config --cflags gmodule`"
+-   AC_SUBST(GMODULE_LIBS)
+-   AC_SUBST(GMODULE_FLAGS)
+-   AC_MSG_RESULT(yes)
+-else
+-   AC_MSG_RESULT(no)
++    dynworks=true
++AC_DEFINE(USE_GMODULE)
++GMODULE_LIBS="`glib-config --libs gmodule`"
++GMODULE_FLAGS="`glib-config --cflags gmodule`"
++AC_SUBST(GMODULE_LIBS)
++AC_SUBST(GMODULE_FLAGS)
+ fi
+ 
+ dnl Check for location of rgb.txt file (works without, but better with)

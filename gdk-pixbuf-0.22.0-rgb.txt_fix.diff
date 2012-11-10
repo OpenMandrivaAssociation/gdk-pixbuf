@@ -1,0 +1,17 @@
+--- configure.in	2008-07-30 15:39:50.000000000 +0200
++++ configure.in.oden	2008-07-30 16:01:32.000000000 +0200
+@@ -129,12 +129,12 @@
+ AC_MSG_CHECKING([for location of rgb.txt database])
+ 
+ dnl default to this..
+-path_rgb_txt=/usr/lib/X11/rgb.txt
++path_rgb_txt=/usr/share/X11/rgb.txt
+ 
+ if test -r ${x_libraries}/X11/rgb.txt; then
+   path_rgb_txt="${x_libraries}/X11/rgb.txt"
+ else
+-  for d in /usr/lib/X11 /usr/local/lib/X11 /usr/openwin/lib; do
++  for d in /usr/lib/X11 /usr/local/lib/X11 /usr/openwin/lib /usr/share/X11; do
+     if test -r $d/rgb.txt; then
+       path_rgb_txt="$d/rgb.txt"
+       break

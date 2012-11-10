@@ -1,0 +1,24 @@
+diff -Naur gdk-pixbuf-0.22.0/gdk-pixbuf/Makefile.am gdk-pixbuf-0.22.0.oden/gdk-pixbuf/Makefile.am
+--- gdk-pixbuf-0.22.0/gdk-pixbuf/Makefile.am	2002-09-11 17:55:52.000000000 +0200
++++ gdk-pixbuf-0.22.0.oden/gdk-pixbuf/Makefile.am	2008-07-30 16:57:01.000000000 +0200
+@@ -16,7 +16,7 @@
+ 	libgdk_pixbuf_xlib.la	\
+ 	$(CANVAS_PIXBUF_LIB)
+ 
+-libgnomecanvaspixbuf_la_LDFLAGS = -version-info 1:0:0 $(EXTRA_GNOME_LIBS)
++libgnomecanvaspixbuf_la_LDFLAGS = -version-info 1:0:0 libgdk_pixbuf.la $(EXTRA_GNOME_LIBS)
+ 
+ libexecdir = $(libdir)/gdk-pixbuf/loaders
+ 
+diff -Naur gdk-pixbuf-0.22.0/gdk-pixbuf/Makefile.in gdk-pixbuf-0.22.0.oden/gdk-pixbuf/Makefile.in
+--- gdk-pixbuf-0.22.0/gdk-pixbuf/Makefile.in	2002-12-18 23:19:32.000000000 +0100
++++ gdk-pixbuf-0.22.0.oden/gdk-pixbuf/Makefile.in	2008-07-30 16:57:45.000000000 +0200
+@@ -124,7 +124,7 @@
+ 	$(CANVAS_PIXBUF_LIB)
+ 
+ 
+-libgnomecanvaspixbuf_la_LDFLAGS = -version-info 1:0:0 $(EXTRA_GNOME_LIBS)
++libgnomecanvaspixbuf_la_LDFLAGS = -version-info 1:0:0 libgdk_pixbuf.la $(EXTRA_GNOME_LIBS)
+ 
+ libexecdir = $(libdir)/gdk-pixbuf/loaders
+ 

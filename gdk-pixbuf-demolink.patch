@@ -1,0 +1,25 @@
+diff -ur gdk-pixbuf-0.11.0/demo/Makefile.am gdk-pixbuf-0.11.0.new/demo/Makefile.am
+--- gdk-pixbuf-0.11.0/demo/Makefile.am	Sun Aug 27 19:48:02 2000
++++ gdk-pixbuf-0.11.0.new/demo/Makefile.am	Mon Jun 25 03:11:14 2001
+@@ -1,7 +1,8 @@
+ noinst_PROGRAMS = pixbuf-demo
+ 
+ INCLUDES = -I$(top_srcdir) $(GLIB_CFLAGS) $(GTK_CFLAGS)
+-LDADD = $(top_builddir)/gdk-pixbuf/libgdk_pixbuf.la $(GLIB_LIBS) $(GTK_LIBS)
++LDADD = $(top_builddir)/gdk-pixbuf/libgdk_pixbuf.la $(GLIB_LIBS) $(GTK_LIBS) \
++	$(LIBJPEG) $(LIBTIFF) $(LIBPNG)
+ 
+ pixbuf_demo_SOURCES =	\
+ 	pixbuf-demo.c
+diff -p -up gdk-pixbuf-0.22.0/demo/Makefile.in~ gdk-pixbuf-0.22.0/demo/Makefile.in
+--- gdk-pixbuf-0.22.0/demo/Makefile.in~	2002-12-18 23:19:33.000000000 +0100
++++ gdk-pixbuf-0.22.0/demo/Makefile.in	2009-08-16 21:29:28.000000000 +0200
+@@ -114,7 +114,7 @@ VERSION = @VERSION@
+ noinst_PROGRAMS = pixbuf-demo
+ 
+ INCLUDES = -I$(top_srcdir) $(GLIB_CFLAGS) $(GTK_CFLAGS)
+-LDADD = $(top_builddir)/gdk-pixbuf/libgdk_pixbuf.la $(GLIB_LIBS) $(GTK_LIBS)
++LDADD = $(top_builddir)/gdk-pixbuf/libgdk_pixbuf.la $(GLIB_LIBS) $(GTK_LIBS) $(LIBJPEG) $(LIBTIFF) $(LIBPNG)
+ 
+ pixbuf_demo_SOURCES = \
+ 	pixbuf-demo.c

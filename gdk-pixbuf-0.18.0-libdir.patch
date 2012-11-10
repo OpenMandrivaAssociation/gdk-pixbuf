@@ -1,0 +1,11 @@
+--- gdk-pixbuf-0.18.0/configure.in.orig	2002-06-18 20:06:40.000000000 +0200
++++ gdk-pixbuf-0.18.0/configure.in	2002-07-31 18:49:33.000000000 +0200
+@@ -230,7 +230,7 @@
+ AM_CONDITIONAL(HAVE_PNG, test "x$LIBPNG" != x)
+ AM_CONDITIONAL(HAVE_JPEG, test "x$LIBJPEG" != x)
+ 
+-GDK_PIXBUF_LIBDIR='-L${libdir}'
++GDK_PIXBUF_LIBDIR=''
+ GDK_PIXBUF_INCLUDEDIR="-I${includedir}/gdk-pixbuf-1.0 $GTK_CFLAGS"
+ GDK_PIXBUF_LIBS="$GLIB_LIBS -lgdk_pixbuf $GTK_LIBS"
+ AC_SUBST(STATIC_LIB_DEPS)

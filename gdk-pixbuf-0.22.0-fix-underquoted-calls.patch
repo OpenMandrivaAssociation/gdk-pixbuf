@@ -1,0 +1,53 @@
+--- gdk-pixbuf-0.22.0/gdk-pixbuf.m4~	2001-02-22 23:57:21.000000000 +0100
++++ gdk-pixbuf-0.22.0/gdk-pixbuf.m4	2006-01-31 11:26:25.000000000 +0100
+@@ -9,7 +9,7 @@
+ dnl AM_PATH_GDK_PIXBUF([MINIMUM-VERSION, [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]]])
+ dnl Test for GDK_PIXBUF, and define GDK_PIXBUF_CFLAGS and GDK_PIXBUF_LIBS
+ dnl
+-AC_DEFUN(AM_PATH_GDK_PIXBUF,
++AC_DEFUN([AM_PATH_GDK_PIXBUF],
+ [dnl 
+ dnl Get the cflags and libraries from the gdk-pixbuf-config script
+ dnl
+--- gdk-pixbuf-0.22.0/configure.in.acquote	2002-12-18 17:18:18.000000000 -0500
++++ gdk-pixbuf-0.22.0/configure.in	2003-06-12 15:55:10.000000000 -0400
+@@ -147,18 +147,18 @@
+ dnl Test for libtiff
+   if test -z "$LIBTIFF"; then
+     AC_CHECK_LIB(tiff, TIFFReadScanline,
+-      AC_CHECK_HEADER(tiffio.h,
++      [AC_CHECK_HEADER(tiffio.h,
+         TIFF='tiff'; LIBTIFF='-ltiff',
+-        AC_MSG_WARN(*** TIFF loader will not be built (TIFF header files not found) ***)),
+-      AC_CHECK_LIB(tiff, TIFFWriteScanline,
+-        AC_CHECK_HEADER(tiffio.h,
++        AC_MSG_WARN(*** TIFF loader will not be built (TIFF header files not found) ***))],
++      [AC_CHECK_LIB(tiff, TIFFWriteScanline,
++        [AC_CHECK_HEADER(tiffio.h,
+           TIFF='tiff'; LIBTIFF='-ltiff -ljpeg -lz',
+-          AC_MSG_WARN(*** TIFF loader will not be built (TIFF header files not found) ***)),
+-        AC_CHECK_LIB(tiff34, TIFFFlushData,
+-          AC_CHECK_HEADER(tiffio.h,
++          AC_MSG_WARN(*** TIFF loader will not be built (TIFF header files not found) ***))],
++        [AC_CHECK_LIB(tiff34, TIFFFlushData,
++          [AC_CHECK_HEADER(tiffio.h,
+             TIFF='tiff'; LIBTIFF='-ltiff34 -ljpeg -lz',
+-            AC_MSG_WARN(*** TIFF loader will not be built (TIFF header files not found) ***)),
+-        AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF library not found) ***), -ljpeg -lz -lm), -ljpeg -lz -lm), -lm)
++            AC_MSG_WARN(*** TIFF loader will not be built (TIFF header files not found) ***))],
++        AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF library not found) ***), -ljpeg -lz -lm)], -ljpeg -lz -lm)], -lm)
+   fi
+ 
+ dnl Test for libjpeg
+@@ -191,9 +191,9 @@
+ dnl Test for libpng
+   if test -z "$LIBPNG"; then
+     AC_CHECK_LIB(png, png_read_info,
+-      AC_CHECK_HEADER(png.h,
++      [AC_CHECK_HEADER(png.h,
+         png_ok=yes,
+-        png_ok=no),
++        png_ok=no)],
+       AC_MSG_WARN(*** PNG loader will not be built (PNG library not found) ***), -lz -lm)
+     if test "$png_ok" = yes; then
+       AC_MSG_CHECKING([for png_structp in png.h])
