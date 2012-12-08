@@ -1,44 +1,58 @@
---- gdk-pixbuf-0.22.0/configure.in.automake	2011-12-06 10:48:39.348525418 +0100
-+++ gdk-pixbuf-0.22.0/configure.in	2011-12-06 10:49:12.588525034 +0100
-@@ -18,6 +18,7 @@ AC_SUBST(GDK_PIXBUF_MICRO)
- AC_SUBST(GDK_PIXBUF_VERSION)
- AM_PROG_LIBTOOL
+--- gdk-pixbuf/Makefile.am.old	2012-03-17 15:00:34.003582684 +0300
++++ gdk-pixbuf/Makefile.am	2012-03-17 15:02:35.315064270 +0300
+@@ -18,7 +18,7 @@
  
-+AM_PROG_AS
- AC_PROG_CC
- AC_ISC_POSIX
- AM_PROG_CC_STDC
---- gdk-pixbuf-0.22.0/doc/Makefile.am.automake	2011-12-06 10:54:59.588524580 +0100
-+++ gdk-pixbuf-0.22.0/doc/Makefile.am	2011-12-06 10:55:01.618526531 +0100
-@@ -156,7 +156,7 @@ install-data-local:
- 	  done; \
- 	fi)
- #	  echo '-- Installing $(srcdir)/html/index.sgml' ; \
--#	  $(INSTALL_DATA) $(srcdir)/html/index.sgml $(DESTDIR)$(TARGET_DIR); \
-+#	  $(INSTALL_DATA) $(srcdir)/html/index.sgml $(DESTDIR)$(TARGET_DIR); 
+ libgnomecanvaspixbuf_la_LDFLAGS = -version-info 1:0:0 libgdk_pixbuf.la $(EXTRA_GNOME_LIBS)
+ 
+-libexecdir = $(libdir)/gdk-pixbuf/loaders
++loaderdir = $(libdir)/gdk-pixbuf/loaders
  
  #
- # Require gtk-doc when making dist
---- gdk-pixbuf-0.22.0/gdk-pixbuf/Makefile.am.automake	2011-12-06 11:05:04.858525909 +0100
-+++ gdk-pixbuf-0.22.0/gdk-pixbuf/Makefile.am	2011-12-06 12:13:55.581025587 +0100
-@@ -116,9 +116,9 @@ BMP_LIB = libpixbufloader-bmp.la
+ # The PNG plugin.
+@@ -118,7 +118,7 @@
  
- XBM_LIB = libpixbufloader-xbm.la
- 
-+libexecmoddir = $(libexecdir)
  if BUILD_DYNAMIC_MODULES
--
+ 
 -libexec_LTLIBRARIES = 	\
-+libexecmod_LTLIBRARIES = 	\
++loader_LTLIBRARIES = 	\
  	$(PNG_LIB)	\
  	$(JPEG_LIB)	\
  	$(GIF_LIB)	\
-@@ -134,7 +134,7 @@ libexec_LTLIBRARIES = 	\
+@@ -134,7 +134,7 @@
  extra_sources = 
  
  else
 -libexec_LTLIBRARIES = 
-+libexecmod_LTLIBRARIES = 
++loader_LTLIBRARIES = 
  
  extra_sources = $(libpixbufloader_png_la_SOURCES) 	\
  		$(libpixbufloader_jpeg_la_SOURCES) 	\
+@@ -159,7 +159,7 @@
+ 	-I$(top_builddir)/gdk-pixbuf \
+ 	$(X11_CFLAGS) $(GLIB_CFLAGS) $(GTK_CFLAGS) $(GNOME_CFLAGS)
+ 
+-AM_CPPFLAGS = "-DPIXBUF_LIBDIR=\"$(libexecdir)\""
++AM_CPPFLAGS = "-DPIXBUF_LIBDIR=\"$(loaderdir)\""
+ 
+ LDADDS = libgdk_pixbuf.la $(GLIB_LIBS) $(GTK_LIBS) $(STATIC_LIB_DEPS)
+ 
+--- configure.in.old	2012-03-17 15:09:27.426912312 +0300
++++ configure.in	2012-03-17 15:09:10.891118798 +0300
+@@ -21,6 +21,7 @@
+ AC_PROG_CC
+ AC_ISC_POSIX
+ AM_PROG_CC_STDC
++AM_PROG_AS
+ AC_PROG_INSTALL
+ AC_PROG_LN_S
+ AC_PROG_MAKE_SET
+--- doc/Makefile.am.old	2012-03-17 15:06:27.772158208 +0300
++++ doc/Makefile.am	2012-03-17 15:06:36.292051691 +0300
+@@ -157,7 +157,6 @@
+ 	fi)
+ #	  echo '-- Installing $(srcdir)/html/index.sgml' ; \
+ #	  $(INSTALL_DATA) $(srcdir)/html/index.sgml $(DESTDIR)$(TARGET_DIR); \
+-
+ #
+ # Require gtk-doc when making dist
+ #
