@@ -37,6 +37,7 @@ Patch9:		gdk-pixbuf-0.22.0-linkage_fix.diff
 Patch10:	gdk-pixbuf-0.22.0-remove-gmodule-configure-check.patch
 Patch11:	gdk-pixbuf-0.22.0-automake.patch
 Patch12:	gdk-pixbuf-0.22.0-libpng15.patch
+Patch13:	gdk-pixbuf-0.22.0-automake-1.13.patch
 Requires:	%{name}-loaders = %{version}-%{release}
 BuildRequires:	db1-devel
 BuildRequires:	gnome-libs-devel
@@ -144,6 +145,7 @@ You'll also need to install the gdk-pixbuf package.
 %patch10 -p0
 %patch11 -p0
 %patch12 -p1 -b .libpng15
+%patch13 -p1 -b .am113~
 
 # Converting NEWS to UTF-8
 iconv -f iso8859-1 -t utf-8 NEWS > NEWS.conv && mv -f NEWS.conv NEWS

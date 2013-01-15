@@ -1,0 +1,37 @@
+--- gdk-pixbuf-0.22.0/configure.in.am113~	2013-01-15 21:44:59.097941326 +0100
++++ gdk-pixbuf-0.22.0/configure.in	2013-01-15 21:48:15.042594212 +0100
+@@ -1,26 +1,25 @@
+ # Process this file with autoconf to produce a configure script.
+-AC_INIT(gdk-pixbuf/gdk-pixbuf.c)
++AC_INIT(gdk-pixbuf, 0.22.0)
+ 
+ # Save this value here, since automake will set cflags later
+ cflags_set=${CFLAGS+set}
+ 
+-AM_CONFIG_HEADER(config.h)
++AC_CONFIG_HEADERS([config.h])
++
++AM_INIT_AUTOMAKE
+ 
+ GDK_PIXBUF_MAJOR=0
+ GDK_PIXBUF_MINOR=22
+ GDK_PIXBUF_MICRO=0
+ GDK_PIXBUF_VERSION="${GDK_PIXBUF_MAJOR}.${GDK_PIXBUF_MINOR}.${GDK_PIXBUF_MICRO}"
+-AM_INIT_AUTOMAKE(gdk-pixbuf, ${GDK_PIXBUF_VERSION})
+-
+-AC_SUBST(GDK_PIXBUF_MAJOR)
+-AC_SUBST(GDK_PIXBUF_MINOR)
+-AC_SUBST(GDK_PIXBUF_MICRO)
+-AC_SUBST(GDK_PIXBUF_VERSION)
++AC_SUBST([GDK_PIXBUF_MAJOR])
++AC_SUBST([GDK_PIXBUF_MINOR])
++AC_SUBST([GDK_PIXBUF_MICRO])
++AC_SUBST([GDK_PIXBUF_VERSION])
+ AM_PROG_LIBTOOL
+ 
+ AC_PROG_CC
+ AC_ISC_POSIX
+-AM_PROG_CC_STDC
+ AM_PROG_AS
+ AC_PROG_INSTALL
+ AC_PROG_LN_S
