@@ -17,7 +17,7 @@ Version:	0.22.0
 Release:	20
 License:	LGPLv2+
 Group:		System/Libraries
-URL:		http://www.gnome.org/
+URL:		https://www.gnome.org/
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/unstable/%{name}/%{name}-%{version}.tar.bz2
 Patch0:		gdk-pixbuf-demolink.patch
 # (fc) 0.18.0-1mdk don't add -Llibdir to gdk-pixbuf-config --libs
