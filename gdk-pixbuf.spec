@@ -39,6 +39,9 @@ Patch11:	gdk-pixbuf-0.22.0-automake.patch
 Patch12:	gdk-pixbuf-0.22.0-libpng15.patch
 Patch13:	gdk-pixbuf-0.22.0-automake-1.13.patch
 Requires:	%{name}-loaders = %{version}-%{release}
+BuildRequires:	autoconf
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
 BuildRequires:	db1-devel
 BuildRequires:	gnome-libs-devel
 BuildRequires:	jpeg-devel
